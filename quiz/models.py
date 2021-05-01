@@ -18,6 +18,8 @@ class Question(models.Model):
         max_length=2, choices=DifficultyChoice.choices)
     location = models.PointField(default=Point(13.4050, 52.5200))
 
+    created = models.DateTimeField(auto_now_add=True)
+
     @property
     def longitude(self):
         return self.location.x
