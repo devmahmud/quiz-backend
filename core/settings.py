@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'django_rest_passwordreset',
+    'rest_framework_gis',
     # Project Apps
     'quiz'
 ]
