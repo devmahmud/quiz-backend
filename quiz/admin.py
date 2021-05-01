@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
 
-from .models import Question, Quiz
+from .models import Question, Quiz, Sitting
 
 
 @admin.register(Question)
@@ -10,3 +10,4 @@ class QuestionAdmin(OSMGeoAdmin):
 
 
 admin.site.register(Quiz)
+admin.site.register(Sitting)
