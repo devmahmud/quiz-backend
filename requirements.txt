@@ -9,3 +9,4 @@ django-rest-passwordreset==1.1.0
 whitenoise==5.2.0
 coreapi==2.3.3
 djangorestframework-gis==0.17
+django-sortedm2m==3.0.2

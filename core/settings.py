@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_rest_passwordreset',
     'rest_framework_gis',
+    'sortedm2m',
     # Project Apps
     'quiz'
 ]
