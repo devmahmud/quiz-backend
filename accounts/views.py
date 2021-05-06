@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 from rest_framework import generics
@@ -82,3 +82,11 @@ class ChangePasswordView(generics.UpdateAPIView):
             }
             return Response(response)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LogoutView(APIView):
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+
+    def get(self, request, format=None):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
