@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'sortedm2m',
     # Project Apps
-    'quiz'
+    'quiz',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -96,6 +97,13 @@ DATABASES = {
         cast=db_url
     )
 }
+
+AUTH_USER_MODEL = "accounts.User"
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'accounts.authentication.EmailOrUsernameModelBackend',
+)
 
 
 # Password validation
