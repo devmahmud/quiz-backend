@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from .models import Quiz
+from .serializers import QuizSerializer
+
+
+class QuizListView(ListAPIView):
+    serializer_class = QuizSerializer
+    queryset = Quiz.objects.all()
