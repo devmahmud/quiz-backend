@@ -1,16 +1,17 @@
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.models import Token
 from rest_framework import status
-from django.db.models import Q
+
+from rest_framework.authtoken.views import ObtainAuthToken
 
 
-from .serializers import UserSerializer, ChangePasswordSerializer
+from .serializers import (
+    UserSerializer, ChangePasswordSerializer, AuthTokenSerializer)
 
 User = get_user_model()
 
@@ -19,28 +20,8 @@ class UserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
-class LoginApiView(APIView):
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-
-        if not username or not password:
-            return Response({'error': 'Please provide both username and password'}, status=status.HTTP_400_BAD_REQUEST)
-
-        user_obj = User.objects.filter(
-            Q(email=username.lower()) | Q(username=username)).first()
-
-        if user_obj:
-            user = authenticate(username=user_obj.username, password=password)
-
-            if not user:
-                return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
-
-            token, _ = Token.objects.get_or_create(user=user)
-            user_data = UserSerializer(user, context={"request": request}).data
-            return Response({'token': token.key, 'user': user_data}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'User Doesn\'t exists'}, status=status.HTTP_404_NOT_FOUND)
+class CreateTokenView(ObtainAuthToken):
+    serializer_class = AuthTokenSerializer
 
 
 class RetrieveUpdateProfileView(generics.RetrieveUpdateAPIView):

@@ -51,8 +51,9 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'sortedm2m',
     # Project Apps
-    'quiz',
     'accounts',
+    'quiz',
+
 ]
 
 MIDDLEWARE = [
@@ -98,7 +99,6 @@ DATABASES = {
     )
 }
 
-AUTH_USER_MODEL = "accounts.User"
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
