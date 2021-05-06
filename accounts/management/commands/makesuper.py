@@ -1,31 +1,17 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import ModelBackend
-from django.db.models import Q
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from django.core.management.base import BaseCommand
 
 
-class EmailOrPhoneModelBackend(ModelBackend):
-    """
-    Authentication backend which allows users to authenticate using either their
-    email or phone number
-    """
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        USERNAME = "admin"
+        PASSWORD = "admin"
+        EMAIL = "admin@adbazar.net"
 
-    def authenticate(self, request, email_or_phone=None, password=None):
-        try:
-            user = User.objects.get(
-                Q(email=email_or_phone) | Q(phone=email_or_phone)
-            )
-            pwd_valid = user.check_password(password)
-            if pwd_valid:
-                return user
-            return None
-        except User.DoesNotExist:
-            return None
-
-    def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return None
+        User = get_user_model()
+        if not User.objects.filter(username=USERNAME).exists():
+            User.objects.create_superuser(
+                USERNAME, EMAIL, PASSWORD)
+            self.stdout.write(self.style.SUCCESS('Admin user has created'))
+        else:
+            self.stdout.write(self.style.ERROR('Admin user already exists'))
