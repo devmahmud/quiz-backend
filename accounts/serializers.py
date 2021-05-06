@@ -20,3 +20,10 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
         return user
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
+
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
