@@ -34,7 +34,7 @@ export default function Login() {
         setLoading(false);
         dispatch(getAuthUserAsync());
         history.push("/");
-      }, 2000);
+      }, 3000);
     } else {
       if (res?.response?.data?.non_field_errors) {
         toast.error(res?.response?.data?.non_field_errors[0]);
