@@ -15,14 +15,14 @@ import "react-toastify/dist/ReactToastify.css";
 let persistor = persistStore(store);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <App />
         <ToastContainer />
       </PersistGate>
     </Provider>
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById("root")
 );
 

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { getAuthUserAsync, login } from "../../redux/authSlice";
+import { login } from "../../redux/authSlice";
 
 import authAPI from "../../services/authAPI";
 
@@ -26,16 +26,14 @@ export default function Login() {
 
     const res = await authAPI.login(data);
 
-    setLoading(false);
-
     if (res !== undefined && /20[0-6]/g.test(res.status)) {
-      dispatch(login(res.data));
       setTimeout(function () {
+        dispatch(login(res.data));
         setLoading(false);
-        dispatch(getAuthUserAsync());
         history.push("/");
-      }, 3000);
+      }, 2000);
     } else {
+      setLoading(false);
       if (res?.response?.data?.non_field_errors) {
         toast.error(res?.response?.data?.non_field_errors[0]);
       } else {

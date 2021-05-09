@@ -2,52 +2,35 @@ import React, { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { logout } from "../../redux/authSlice";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const { isAuthenticated, loading } = {};
+  const { user } = auth;
 
-  const onLogout = (e) => {
-    e.preventDefault();
+  const onLogout = () => {
+    dispatch(logout());
+    toast.success("Succesfully Logged out !");
   };
 
   const guestLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <NavLink to="/register">Register</NavLink>
-      </li>
-      <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>
-    </ul>
+    <>
+      <Nav.Link as={Link} to="/login">
+        Login
+      </Nav.Link>
+      <Nav.Link as={Link} to="/register">
+        Register
+      </Nav.Link>
+    </>
   );
 
   const authLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <Link to="/posts">Posts</Link>
-      </li>
-      <li>
-        <Link to="/dashboard">
-          <i className="fas fa-user"></i>{" "}
-          <span className="hide-sm">Dashboard</span>
-        </Link>
-      </li>
-      <li>
-        <a href="/logout" onClick={onLogout}>
-          <i className="fas fa-sign-out-alt"></i>{" "}
-          <span className="hide-sm">Logout</span>
-        </a>
-      </li>
-    </ul>
+    <>
+      <Nav.Link onClick={onLogout}>Logout</Nav.Link>
+    </>
   );
 
   return (
@@ -59,12 +42,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/login">
-              Login
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Register
-            </Nav.Link>
+            {user?.username ? authLinks : guestLinks}
           </Nav>
         </Navbar.Collapse>
       </Container>
