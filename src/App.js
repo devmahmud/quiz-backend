@@ -1,24 +1,18 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
-
-import { Button } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Routes from "./components/routing/Routes";
+import Header from "./components/layout/Header";
 import "./app.css";
 
 function App() {
   return (
-    <div className="App" css={styles}>
-      <Button variant="primary" className="my">
-        Hello Bootstrap
-      </Button>
+    <div>
+      <Router>
+        <Header />
+        <Switch>
+          <Route component={Routes} />
+        </Switch>
+      </Router>
     </div>
   );
 }
-
-const styles = css`
-  button {
-    background-color: red;
-  }
-`;
-
 export default App;
