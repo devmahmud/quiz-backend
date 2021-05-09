@@ -9,3 +9,8 @@ db.sqlite3
 venv
 .env
 migrations
+node_modules
+build
+static
+package-lock.json
+yarn.lock
