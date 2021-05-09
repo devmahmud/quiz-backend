@@ -10,7 +10,7 @@ const register = async (data) => {
 
 const login = async (data) => {
   try {
-    return await ax.post("auth/login/", data);
+    return await ax.post("/account/auth/token/", data);
   } catch (error) {
     return error;
   }
@@ -21,6 +21,19 @@ const logout = async (data) => {
     return await ax.post("auth/logout/");
   } catch (error) {
     return error;
+  }
+};
+
+// Get Auth User
+const getAuthUser = async () => {
+  try {
+    const res = await ax.get("/account/auth/profile/");
+
+    if (/20[0-6]/g.test(res.status)) {
+      return res.data;
+    }
+  } catch (error) {
+    return {};
   }
 };
 
@@ -45,6 +58,7 @@ const passwordResetConfirm = async (data) => {
 const toExport = {
   register,
   login,
+  getAuthUser,
   logout,
   passwordReset,
   passwordResetConfirm,

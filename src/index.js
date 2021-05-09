@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { ToastContainer } from "react-toastify";
+
 import reportWebVitals from "./reportWebVitals";
 
 import App from "./App";
 import store from "./redux/store";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
 let persistor = persistStore(store);
 
@@ -16,6 +19,7 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <App />
+        <ToastContainer />
       </PersistGate>
     </Provider>
   </React.StrictMode>,

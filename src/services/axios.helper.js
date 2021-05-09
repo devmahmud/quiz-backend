@@ -9,13 +9,7 @@ const getUserToken = () => {
 export const setTokenInHeader = (config) => {
   if (localStorage && localStorage.getItem("persist:root")) {
     const token = getUserToken();
-    if (
-      config.url === "auth/registration/" ||
-      config.url === "users/api-token-auth" ||
-      config.url === "auth/login/" ||
-      config.url === "auth/password/reset/" ||
-      config.url === "auth/password/reset/confirm/"
-    ) {
+    if (config.url === "/account/auth/token/") {
       return config;
     } else {
       config.headers["Authorization"] = `Token ${token}`;
