@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
@@ -29,6 +29,9 @@ const Header = () => {
 
   const authLinks = (
     <>
+      <Nav.Link as={NavLink} to="/quizzes">
+        Quizzes
+      </Nav.Link>
       <Nav.Link onClick={onLogout}>Logout</Nav.Link>
     </>
   );

@@ -2,12 +2,13 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import { colors } from "../common/colors";
+import Logo from "../../assets/images/logo.png";
 
 export default function Home() {
   return (
     <div css={styles}>
       <h1>Venari</h1>
-      <img src="/logo.png" alt="Venari" />
+      <img src={Logo} alt="Venari" />
       <h6>Explore your city.</h6>
     </div>
   );
