@@ -9,7 +9,10 @@ const getUserToken = () => {
 export const setTokenInHeader = (config) => {
   if (localStorage && localStorage.getItem("persist:root")) {
     const token = getUserToken();
-    if (config.url === "/account/auth/token/") {
+    if (
+      config.url === "/account/auth/token/" ||
+      config.url === "/account/users/"
+    ) {
       return config;
     } else {
       config.headers["Authorization"] = `Token ${token}`;

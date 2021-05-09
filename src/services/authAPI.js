@@ -2,7 +2,7 @@ import ax from "./axios.config";
 
 const register = async (data) => {
   try {
-    return await ax.post("auth/registration/", data);
+    return await ax.post("/account/users/", data);
   } catch (error) {
     return error;
   }

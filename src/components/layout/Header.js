@@ -18,10 +18,10 @@ const Header = () => {
 
   const guestLinks = (
     <>
-      <Nav.Link as={Link} to="/login">
+      <Nav.Link as={NavLink} to="/login">
         Login
       </Nav.Link>
-      <Nav.Link as={Link} to="/register">
+      <Nav.Link as={NavLink} to="/register">
         Register
       </Nav.Link>
     </>
