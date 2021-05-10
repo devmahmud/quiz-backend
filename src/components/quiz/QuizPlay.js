@@ -10,7 +10,7 @@ import quizAPI from "../../services/quizAPI";
 export default function QuizPlay(props) {
   const sitting_id = props?.match?.params?.id;
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm();
 
   const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState({});
@@ -75,6 +75,7 @@ export default function QuizPlay(props) {
               <Form.Control
                 type="text"
                 {...register("answer", { required: true })}
+                isInvalid={formState?.errors?.answer || false}
               />
             </Form.Group>
             <div className="d-flex justify-content-around mt-5">
