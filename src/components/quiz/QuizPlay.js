@@ -26,14 +26,28 @@ export default function QuizPlay(props) {
     const res = await quizAPI.getQuestion(sitting_id);
     setLoading(false);
 
-    if (res?.id) {
-      setQuestion(res);
+    if (/20[0-6]/g.test(res?.status)) {
+      if (res?.data?.id) {
+        setQuestion(res?.data);
+      } else {
+        history.push("/quizzes/1/summary/");
+        // No more question. Show Summary
+        console.log(res.status);
+      }
     }
   };
 
   // Answer submit handler
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    setLoading(true);
+
+    const res = await quizAPI.submitAnswer(sitting_id, data);
+
+    setLoading(false);
+
+    getQuestion();
+
+    console.log(res);
   };
 
   useEffect(() => {

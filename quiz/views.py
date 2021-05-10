@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.views import APIView
 from rest_framework import permissions, status
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
@@ -39,7 +39,7 @@ class SittingApiView(RetrieveAPIView):
             return Response(status=status.HTTP_226_IM_USED)
 
 
-class QuestionApiView(RetrieveAPIView):
+class QuestionApiView(RetrieveUpdateAPIView):
     authentication_classes = [TokenAuthentication, BasicAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     queryset = Sitting.objects.all()
@@ -52,4 +52,33 @@ class QuestionApiView(RetrieveAPIView):
             serializer = QuestionSerializer(question)
             return Response(serializer.data)
         else:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            instance.mark_quiz_complete()
+            return Response({"status": "end"}, status=status.HTTP_204_NO_CONTENT)
+
+    def update(self, request, *args, **kwargs):
+        user_answer = request.data.get('answer')
+        instance = self.get_object()
+        question = instance.get_first_question()
+
+        correct = question.answer.lower() == user_answer.lower()
+
+        # Save user answer
+        instance.add_user_answer(question, user_answer)
+
+        # remove question from current list
+        instance.remove_first_question()
+
+        if correct:
+            print('Answer is correct')
+            # Add points
+
+            # Return that answer is correct
+        else:
+            # Add question to incorrect question
+
+            # return that answer is incorrect with correct answer
+            pass
+
+        print(instance, request.data, question)
+
+        return Response({})
