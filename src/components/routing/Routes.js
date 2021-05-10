@@ -15,6 +15,7 @@ import Home from "../home/Home";
 // import Posts from "../posts/Posts";
 // import Post from "../post/Post";
 import NotFound from "../layout/NotFound";
+import QuizDetails from "../quiz/QuizDetails";
 import QuizList from "../quiz/QuizList";
 
 import PrivateRoute from "./PrivateRoute";
@@ -27,8 +28,8 @@ const Routes = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/quizzes" component={QuizList} />
-        {/*<Route exact path="/profile/:id" component={Profile} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/quizzes/:id" component={QuizDetails} />
+        {/*<PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />
         <PrivateRoute exact path="/edit-profile" component={EditProfile} />
         <PrivateRoute exact path="/add-experience" component={AddExperience} />

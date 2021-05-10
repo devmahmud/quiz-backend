@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getAllQuizAsync } from "../../redux/quizSlice";
 import Spinner from "../layout/Spinner";
 
@@ -22,7 +23,7 @@ export default function QuizList() {
         <ul className="list-group">
           {quizzes?.map((quiz, i) => (
             <li key={i} className="list-group-item mb-2">
-              <a href="#!">{quiz.name}</a>
+              <Link to={`/quizzes/${quiz.id}`}>{quiz.name}</Link>
             </li>
           ))}
         </ul>
