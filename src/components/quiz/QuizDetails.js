@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import {
   FaMapMarkerAlt,
   FaClipboardList,
@@ -8,22 +8,37 @@ import {
   FaArrowLeft,
   FaPlay,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { getQuizByIdAsync } from "../../redux/quizSlice";
 import { colors } from "../common/colors";
+import quizAPI from "../../services/quizAPI";
 
 export default function QuizDetails(props) {
   const quiz_id = props?.match?.params?.id;
 
+  const [loading, setLoading] = useState(false);
+
   const { quizById } = useSelector((state) => state.quiz);
 
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  // Quiz start handler
+  const onQuizStart = async () => {
+    setLoading(true);
+    const res = await quizAPI.newSitting(quizById.id);
+
+    if (res?.id) {
+      history.push(`/quizzes/${res.id}/play/`);
+    }
+  };
 
   useEffect(() => {
     dispatch(getQuizByIdAsync(quiz_id));
 
     // eslint-disable-next-line
   }, [quiz_id]);
+
   return (
     <Row className="mt-3" style={{ color: colors.olive }}>
       <Col md={{ span: 8, offset: 2 }}>
@@ -50,8 +65,13 @@ export default function QuizDetails(props) {
             <Link to="/quizzes" className="btn btn-primary px-5">
               <FaArrowLeft /> Back
             </Link>
-            <button className="btn btn-success px-5">
-              Play <FaPlay />{" "}
+            <button
+              className="btn btn-success px-5"
+              onClick={onQuizStart}
+              disabled={loading}
+            >
+              Play <FaPlay />
+              {loading && <Spinner animation="border" size="sm" />}
             </button>
           </div>
         </div>
