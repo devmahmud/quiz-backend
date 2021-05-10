@@ -1,23 +1,13 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import Home from "../home/Home";
-// import Alert from "../layout/Alert";
-// import Dashboard from "../dashboard/Dashboard";
-// import CreateProfile from "../profile-forms/CreateProfile";
-// import EditProfile from "../profile-forms/EditProfile";
-// import AddExperience from "../profile-forms/AddExperience";
-// import AddEducation from "../profile-forms/AddEducation";
-// import Profiles from "../profiles/Profiles";
-// import Profile from "../profile/Profile";
-// import Posts from "../posts/Posts";
-// import Post from "../post/Post";
 import NotFound from "../layout/NotFound";
 import QuizDetails from "../quiz/QuizDetails";
 import QuizList from "../quiz/QuizList";
 import QuizPlay from "../quiz/QuizPlay";
+import QuizSummary from "../quiz/QuizSummary";
 
 import PrivateRoute from "./PrivateRoute";
 
@@ -31,6 +21,11 @@ const Routes = () => {
         <PrivateRoute exact path="/quizzes" component={QuizList} />
         <PrivateRoute exact path="/quizzes/:id" component={QuizDetails} />
         <PrivateRoute exact path="/quizzes/:id/play" component={QuizPlay} />
+        <PrivateRoute
+          exact
+          path="/quizzes/:id/summary"
+          component={QuizSummary}
+        />
         {/*<PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />
         <PrivateRoute exact path="/edit-profile" component={EditProfile} />
