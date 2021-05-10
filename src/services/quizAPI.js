@@ -46,7 +46,7 @@ const getQuestion = async (id) => {
 
 const submitAnswer = async (id, data) => {
   try {
-    const res = await ax.put(`sitting/${id}/question/`, data);
+    const res = await ax.post(`sitting/${id}/question/`, data);
 
     if (/20[0-6]/g.test(res.status)) {
       return res.data;
