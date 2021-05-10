@@ -1,6 +1,5 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
-from django.db.models.fields.related import ForeignKey
 from sortedm2m.fields import SortedManyToManyField
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -8,6 +7,7 @@ from django.core.validators import validate_comma_separated_integer_list
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.timezone import now
 import json
+from geopy import distance
 
 User = get_user_model()
 
@@ -68,6 +68,15 @@ class Quiz(models.Model):
         blank=False, default=True, verbose_name=_("Single Attempt"))
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def total_question(self):
+        return self.questions.all().count()
+
+    @property
+    def total_distance(self):
+        question_list = list(self.questions.values_list('location', flat=True))
+        return round(distance.distance(*question_list).km, 2)
 
     class Meta:
         verbose_name_plural = 'Quizzes'
