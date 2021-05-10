@@ -69,16 +69,10 @@ class QuestionApiView(RetrieveUpdateAPIView):
         instance.remove_first_question()
 
         if correct:
-            print('Answer is correct')
             # Add points
 
-            # Return that answer is correct
+            return Response({"answer": "correct"})
         else:
             # Add question to incorrect question
 
-            # return that answer is incorrect with correct answer
-            pass
-
-        print(instance, request.data, question)
-
-        return Response({})
+            return Response({"answer": question.answer})

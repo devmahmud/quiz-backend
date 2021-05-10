@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Spinner, Form, Card } from "react-bootstrap";
 import { FaInfoCircle, FaRegLightbulb } from "react-icons/fa";
+import swal from "sweetalert";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { colors } from "../common/colors";
@@ -15,9 +15,6 @@ export default function QuizPlay(props) {
   const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState({});
 
-  const { quizById } = useSelector((state) => state.quiz);
-
-  const dispatch = useDispatch();
   const history = useHistory();
 
   // Get question
@@ -40,14 +37,15 @@ export default function QuizPlay(props) {
   // Answer submit handler
   const onSubmit = async (data) => {
     setLoading(true);
-
     const res = await quizAPI.submitAnswer(sitting_id, data);
-
     setLoading(false);
 
+    if (res?.answer === "correct") {
+      swal("Correct Answer!", "Good job. Congrats !", "success");
+    } else if (res?.answer) {
+      swal("Incorrect Answer!", `Correct answer is: ${res?.answer}`, "error");
+    }
     getQuestion();
-
-    console.log(res);
   };
 
   useEffect(() => {
