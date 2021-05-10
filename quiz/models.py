@@ -1,3 +1,4 @@
+import json
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from sortedm2m.fields import SortedManyToManyField
@@ -6,8 +7,8 @@ from django.contrib.auth import get_user_model
 from django.core.validators import validate_comma_separated_integer_list
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.timezone import now
-import json
 from geopy import distance
+
 
 User = get_user_model()
 

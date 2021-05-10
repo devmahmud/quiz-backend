@@ -12,6 +12,21 @@ const getAllQuiz = async () => {
   }
 };
 
-const toExport = { getAllQuiz };
+const getQuizDetails = async (id) => {
+  try {
+    const res = await ax.get(`quizzes/${id}/`);
+
+    if (/20[0-6]/g.test(res.status)) {
+      return res.data;
+    }
+  } catch (error) {
+    return {};
+  }
+};
+
+const toExport = {
+  getAllQuiz,
+  getQuizDetails,
+};
 
 export default toExport;
