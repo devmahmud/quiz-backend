@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
+from django.db.models.fields.related import ForeignKey
 from sortedm2m.fields import SortedManyToManyField
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -15,6 +16,17 @@ class DifficultyChoice(models.TextChoices):
     EASY = "1", "Easy"
     MEDIUM = "2", "Medium"
     HARD = "3", "Hard"
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    created = models.DateField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.name
 
 
 class Question(models.Model):
@@ -46,6 +58,9 @@ class Question(models.Model):
 
 class Quiz(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Name"))
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="category_quizzes")
+    description = models.TextField()
     questions = SortedManyToManyField(Question, verbose_name=_("Questions"))
     random_order = models.BooleanField(
         blank=False, default=False, verbose_name=_("Random Order"))

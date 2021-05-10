@@ -6,6 +6,8 @@ from .models import Quiz
 
 
 class QuizSerializer(serializers.ModelSerializer):
+    category = serializers.ReadOnlyField(source='category.name')
+
     class Meta:
         model = Quiz
-        fields = "__all__"
+        fields = ['id', 'name', 'category']
