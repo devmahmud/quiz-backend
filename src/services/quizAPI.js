@@ -36,10 +36,23 @@ const newSitting = async (id) => {
   }
 };
 
+const getQuestion = async (id) => {
+  try {
+    const res = await ax.get(`sitting/${id}/question/`);
+
+    if (/20[0-6]/g.test(res.status)) {
+      return res.data;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 const toExport = {
   getAllQuiz,
   getQuizDetails,
   newSitting,
+  getQuestion,
 };
 
 export default toExport;

@@ -12,5 +12,6 @@ urlpatterns = [
     path('quizzes/<int:pk>/', QuizDetailView.as_view(), name="quiz_details"),
     path('quizzes/<int:pk>/sitting/',
          SittingApiView.as_view(), name="user_sitting"),
-    path('question/<int:pk>/', QuestionApiView.as_view(), name="question_details"),
+    path('sitting/<int:pk>/question/',
+         QuestionApiView.as_view(), name="question_details"),
 ]

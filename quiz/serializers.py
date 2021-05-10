@@ -7,7 +7,8 @@ from .models import Question, Quiz, Sitting
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = "__all__"
+        fields = ['id', 'pretext', 'question', 'hints',
+                  'theme_tag', 'difficulty', 'location']
 
 
 class QuizSerializer(serializers.ModelSerializer):
