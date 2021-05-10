@@ -1,7 +1,7 @@
 from quiz.models import Quiz
 from rest_framework import serializers
 
-from .models import Quiz
+from .models import Quiz, Sitting
 
 
 class QuizSerializer(serializers.ModelSerializer):
@@ -19,3 +19,10 @@ class QuizDetailSerializer(serializers.ModelSerializer):
         model = Quiz
         fields = ['id', 'name', 'category', 'description',
                   'total_question',  'total_distance']
+
+
+class SittingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Sitting
+        fields = "__all__"

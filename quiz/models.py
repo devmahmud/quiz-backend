@@ -90,9 +90,9 @@ class SittingManager(models.Manager):
 
     def new_sitting(self, user, quiz):
         if quiz.random_order is True:
-            question_set = quiz.questions_set.all().order_by('?')
+            question_set = quiz.questions.all().order_by('?')
         else:
-            question_set = quiz.question_set.all()
+            question_set = quiz.questions.all()
 
         question_set = [item.id for item in question_set]
 
@@ -156,6 +156,30 @@ class Sitting(models.Model):
     end = models.DateTimeField(null=True, blank=True, verbose_name=_("End"))
 
     objects = SittingManager()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.quiz.name}"
+
+    def get_first_question(self):
+        """
+        Returns the next question.
+        If no question is found, returns False
+        Does NOT remove the question from the front of the list.
+        """
+        if not self.question_list:
+            return False
+
+        first, _ = self.question_list.split(',', 1)
+        question_id = int(first)
+        return Question.objects.filter(id=question_id).first()
+
+    def remove_first_question(self):
+        if not self.question_list:
+            return
+
+        _, others = self.question_list.split(',', 1)
+        self.question_list = others
+        self.save()
 
     def add_to_score(self, points):
         self.current_score += int(points)
@@ -222,8 +246,7 @@ class Sitting(models.Model):
     def get_questions(self, with_answers=False):
         question_ids = self._question_ids()
         questions = sorted(
-            self.quiz.question_set.filter(id__in=question_ids)
-            .select_subclasses(),
+            self.quiz.questions.filter(id__in=question_ids),
             key=lambda q: question_ids.index(q.id))
 
         if with_answers:
