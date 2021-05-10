@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col } from "react-bootstrap";
-import { FaMapMarkerAlt, FaClipboardList, FaMap } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaClipboardList,
+  FaMap,
+  FaArrowLeft,
+  FaPlay,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { getQuizByIdAsync } from "../../redux/quizSlice";
 import { colors } from "../common/colors";
 
@@ -11,8 +18,6 @@ export default function QuizDetails(props) {
   const { quizById } = useSelector((state) => state.quiz);
 
   const dispatch = useDispatch();
-
-  console.log(quizById);
 
   useEffect(() => {
     dispatch(getQuizByIdAsync(quiz_id));
@@ -42,8 +47,12 @@ export default function QuizDetails(props) {
           </div>
 
           <div className="d-flex justify-content-around mt-5">
-            <button className="btn btn-primary px-5">Back</button>
-            <button className="btn btn-success px-5">Play</button>
+            <Link to="/quizzes" className="btn btn-primary px-5">
+              <FaArrowLeft /> Back
+            </Link>
+            <button className="btn btn-success px-5">
+              Play <FaPlay />{" "}
+            </button>
           </div>
         </div>
       </Col>
