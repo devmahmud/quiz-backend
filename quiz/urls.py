@@ -4,7 +4,8 @@ from .views import (
     QuizListView,
     QuizDetailView,
     SittingApiView,
-    QuestionApiView
+    QuestionApiView,
+    SummaryApiView
 )
 
 urlpatterns = [
@@ -14,4 +15,6 @@ urlpatterns = [
          SittingApiView.as_view(), name="user_sitting"),
     path('sitting/<int:pk>/question/',
          QuestionApiView.as_view(), name="question_details"),
+    path('sitting/<int:pk>/summary/',
+         SummaryApiView.as_view(), name="summary"),
 ]

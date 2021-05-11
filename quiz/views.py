@@ -69,15 +69,50 @@ class QuestionApiView(APIView):
             correct = question.answer.lower() == user_answer.lower()
             # Save user answer
             instance.add_user_answer(question, user_answer)
-            # remove question from current list
-            instance.remove_first_question()
 
             if correct:
+                # remove question from current list
+                instance.remove_first_question()
+
                 # Add points
                 return Response({"answer": "correct"})
             else:
                 # Add question to incorrect question
+                instance.add_incorrect_question(question)
+                # Remove question from current list
+                instance.remove_first_question()
+
                 return Response({"answer": question.answer})
 
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class SummaryApiView(APIView):
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            sitting_id = kwargs.get('pk')
+            instance = Sitting.objects.get(
+                id=sitting_id, user=request.user, complete=True)
+
+            questions = instance.quiz.questions.all()
+
+            if questions:
+                serializer = QuestionSerializer(questions, many=True)
+
+                context = {
+                    "questions": serializer.data,
+                    "total_distance": instance.quiz.total_distance,
+                    "total_questions": instance.quiz.total_question,
+                    "correct_answer": instance.correct_amount
+                }
+
+                return Response(context)
+            # else:
+            #     instance.mark_quiz_complete()
+            return Response({"status": "end"}, status=status.HTTP_204_NO_CONTENT)
         except ObjectDoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)

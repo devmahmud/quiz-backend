@@ -261,3 +261,7 @@ class Sitting(models.Model):
         return {
             q: q.user_answer for q in self.get_questions(with_answers=True)
         }
+
+    @property
+    def correct_amount(self):
+        return self.quiz.total_question - len(self.get_incorrect_questions)
