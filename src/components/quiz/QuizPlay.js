@@ -48,6 +48,12 @@ export default function QuizPlay(props) {
     getQuestion();
   };
 
+  // Hint click handler
+  const onHintClick = () => {
+    // Reduce score here
+    swal("Hint !", question?.hints || "", "info");
+  };
+
   useEffect(() => {
     getQuestion();
     // eslint-disable-next-line
@@ -94,7 +100,12 @@ export default function QuizPlay(props) {
                 Submit
                 {loading && <Spinner animation="border" size="sm" />}
               </button>
-              <button type="button" className="btn btn-info" disabled={loading}>
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={onHintClick}
+                disabled={loading}
+              >
                 <FaRegLightbulb size="20" />
               </button>
             </div>
