@@ -107,7 +107,8 @@ class SummaryApiView(APIView):
                     "questions": serializer.data,
                     "total_distance": instance.quiz.total_distance,
                     "total_questions": instance.quiz.total_question,
-                    "correct_answer": instance.correct_amount
+                    "correct_answer": instance.correct_amount,
+                    "duration": instance.duration
                 }
 
                 return Response(context)

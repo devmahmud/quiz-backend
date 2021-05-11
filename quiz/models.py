@@ -265,3 +265,8 @@ class Sitting(models.Model):
     @property
     def correct_amount(self):
         return self.quiz.total_question - len(self.get_incorrect_questions)
+
+    @property
+    def duration(self):
+        delta = self.end - self.start
+        return delta.seconds
