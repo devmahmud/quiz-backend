@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Spinner, Form, Card } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaMap, FaSkull, FaClock } from "react-icons/fa";
 import quizAPI from "../../services/quizAPI";
 import { colors } from "../common/colors";
 import HumanizeDuration from "humanize-duration";
+import VisitMap from "./VisitMap";
 
 export default function QuizSummary(props) {
   const sitting_id = props?.match?.params?.id;
 
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState({});
+  const [path, setPath] = useState([]);
 
   const getSummary = async () => {
     setLoading(true);
@@ -19,6 +21,18 @@ export default function QuizSummary(props) {
 
     if (res?.id) {
       setSummary(res);
+
+      let _path = [];
+
+      res?.questions?.forEach((item) => {
+        let location = {
+          lng: item.location.coordinates[0],
+          lat: item.location.coordinates[1],
+        };
+        _path.push(location);
+      });
+
+      setPath(_path);
     }
 
     setLoading(false);
@@ -37,6 +51,9 @@ export default function QuizSummary(props) {
             <Card>
               <Card.Body>
                 <Card.Title as="h5">Quiz Summary</Card.Title>
+                <div className="mb-5">
+                  <VisitMap path={path} />
+                </div>
 
                 <div className="row">
                   <div className="col">
