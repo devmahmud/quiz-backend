@@ -9,6 +9,7 @@ import {
   FaPlay,
 } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
+import swal from "sweetalert";
 import { getQuizByIdAsync } from "../../redux/quizSlice";
 import { colors } from "../common/colors";
 import quizAPI from "../../services/quizAPI";
@@ -28,8 +29,12 @@ export default function QuizDetails(props) {
     setLoading(true);
     const res = await quizAPI.newSitting(quizById.id);
 
+    setLoading(false);
+
     if (res?.id) {
       history.push(`/quizzes/${res.id}/play/`);
+    } else {
+      swal("Error !", "You have already attended", "error");
     }
   };
 
