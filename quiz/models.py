@@ -269,4 +269,4 @@ class Sitting(models.Model):
     @property
     def duration(self):
         delta = self.end - self.start
-        return delta.seconds
+        return delta.seconds * 1000

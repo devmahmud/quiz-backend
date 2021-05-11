@@ -27,7 +27,7 @@ export default function QuizPlay(props) {
       if (res?.data?.id) {
         setQuestion(res?.data);
       } else {
-        history.push("/quizzes/1/summary/");
+        history.push(`/quizzes/${sitting_id}/summary/`);
         // No more question. Show Summary
         console.log(res.status);
       }
