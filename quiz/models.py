@@ -8,6 +8,7 @@ from django.core.validators import validate_comma_separated_integer_list
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.timezone import now
 from geopy import distance
+from tinymce.models import HTMLField
 
 
 User = get_user_model()
@@ -31,7 +32,7 @@ class Category(models.Model):
 
 
 class Question(models.Model):
-    pretext = models.TextField(verbose_name=_("Pre-Text"))
+    pretext = HTMLField(verbose_name=_("Pre-Text"))
     question = models.CharField(max_length=255,  verbose_name=_("Question"))
     answer = models.CharField(max_length=255, verbose_name=_("Answer"))
     hints = models.TextField(blank=True, verbose_name=_("Hints"))
