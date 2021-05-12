@@ -4,6 +4,7 @@ import { FaInfoCircle, FaRegLightbulb } from "react-icons/fa";
 import swal from "sweetalert";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import parse from "html-react-parser";
 import { colors } from "../common/colors";
 import quizAPI from "../../services/quizAPI";
 
@@ -65,7 +66,7 @@ export default function QuizPlay(props) {
         <div className="text-center">
           <Card>
             <Card.Body>
-              <p>{question?.pretext}</p>
+              <div>{parse(`${question?.pretext}`)}</div>
             </Card.Body>
           </Card>
 
