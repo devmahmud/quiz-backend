@@ -15,12 +15,11 @@ Including another URLconf
 """
 from django import urls
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.documentation import include_docs_urls
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
     path('docs/', include_docs_urls(title='Explore The City API')),
     path('api/v1/', include('quiz.urls')),
@@ -28,4 +27,5 @@ urlpatterns = [
     path('api/v1/password_reset/',
          include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('tinymce/', include('tinymce.urls')),
+    re_path('^.*', TemplateView.as_view(template_name='index.html')),
 ]
