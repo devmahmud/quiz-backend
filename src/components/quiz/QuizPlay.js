@@ -42,8 +42,8 @@ export default function QuizPlay(props) {
 
     if (res?.answer === "correct") {
       swal("Correct Answer!", "Good job. Congrats !", "success");
-    } else if (res?.answer) {
-      swal("Incorrect Answer!", `Correct answer is: ${res?.answer}`, "error");
+    } else if (res?.answer === "incorrect") {
+      swal("Incorrect Answer!", "Please try again.", "error");
     }
     getQuestion();
   };

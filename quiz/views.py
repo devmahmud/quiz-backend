@@ -67,22 +67,26 @@ class QuestionApiView(APIView):
             instance = Sitting.objects.get(id=sitting_id, user=request.user)
             question = instance.get_first_question()
             correct = question.answer.lower() == user_answer.lower()
-            # Save user answer
-            instance.add_user_answer(question, user_answer)
 
             if correct:
                 # remove question from current list
                 instance.remove_first_question()
 
-                # Add points
+                # Save user answer
+                instance.add_user_answer(question, user_answer)
+
+                # Add Score if you want
+                # instance.add_to_score(10)
+
                 return Response({"answer": "correct"})
             else:
                 # Add question to incorrect question
                 instance.add_incorrect_question(question)
-                # Remove question from current list
-                instance.remove_first_question()
 
-                return Response({"answer": question.answer})
+                # Remove question from current list
+                # instance.remove_first_question()
+
+                return Response({"answer": "incorrect"})
 
         except ObjectDoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
