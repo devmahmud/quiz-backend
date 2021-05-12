@@ -11,7 +11,7 @@ import quizAPI from "../../services/quizAPI";
 export default function QuizPlay(props) {
   const sitting_id = props?.match?.params?.id;
 
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, reset } = useForm();
 
   const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState({});
@@ -40,6 +40,8 @@ export default function QuizPlay(props) {
     setLoading(true);
     const res = await quizAPI.submitAnswer(sitting_id, data);
     setLoading(false);
+
+    reset();
 
     if (res?.answer === "correct") {
       swal("Correct Answer!", "Good job. Congrats !", "success");
@@ -83,6 +85,7 @@ export default function QuizPlay(props) {
                 type="text"
                 {...register("answer", { required: true })}
                 isInvalid={formState?.errors?.answer || false}
+                autocomplete="off"
               />
             </Form.Group>
             <div className="d-flex justify-content-around mt-5">
