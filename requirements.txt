@@ -11,4 +11,4 @@ coreapi==2.3.3
 djangorestframework-gis==0.17
 django-sortedm2m==3.0.2
 geopy==2.1.0
-django-tinymce==3.3.0
+django-tinymce==3.4.0
