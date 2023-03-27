@@ -195,3 +195,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10,
 }
+
+GDAL_LIBRARY_PATH = r'/usr/local/python/3.10.4/lib/python3.10/site-packages/django/contrib/gis/gdal/error.py'
+
+
